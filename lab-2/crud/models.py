@@ -52,12 +52,32 @@ class Learner(User):
                "Last name: " + self.last_name +  ", " + \
                "Occupation: " + self.occupation
 
+# Enrollment model as a lookup table with additional enrollment info
+class Enrollment(models.Model):
+    AUDIT = 'audit'
+    HONOR = 'honor'
+    COURSE_MODES = [
+        (AUDIT, 'Audit'),
+        (HONOR, 'Honor'),
+    ]
+    # Add learner foreign key
+    learner = models.models.ForeignKey(Learner, on_delete=models.CASCADE)
+    # Add course foreign key
+    course = models.models.ForeignKey(Learner, on_delete=models.CASCADE)
+    # Enrollment date
+    date_enrolled = models.DateField(default=now)
+    # Enrollment mode
+    mode = models.CharField(max_length=5, choices=COURSE_MODES, default=AUDIT)
+
+
 # Course model
 class Course(models.Model):
     name = models.CharField(null=False, max_length=100, default='online course')
     description = models.CharField(max_length=500)
     # Many-To-Many relationship with Instructor
     instructors = models.ManyToManyField(Instructor)
+    # Many-To-Many relationship with Learner via Enrollment
+    instructors = models.ManyToManyField(Learner, through='Enrollment')
 
     # Create a toString method for object string representation
     def __str__(self) -> str:
