@@ -61,7 +61,7 @@ class Enrollment(models.Model):
         (HONOR, 'Honor'),
     ]
     # Add learner foreign key
-    learner = models.models.ForeignKey(Learner, on_delete=models.CASCADE)
+    learner = models.ForeignKey(Learner, on_delete=models.CASCADE)
     # Add course foreign key
     course = models.models.ForeignKey(Learner, on_delete=models.CASCADE)
     # Enrollment date
