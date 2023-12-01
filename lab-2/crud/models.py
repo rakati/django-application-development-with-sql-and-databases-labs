@@ -63,7 +63,7 @@ class Enrollment(models.Model):
     # Add learner foreign key
     learner = models.ForeignKey(Learner, on_delete=models.CASCADE)
     # Add course foreign key
-    course = models.models.ForeignKey(Learner, on_delete=models.CASCADE)
+    course = models.ForeignKey(Learner, on_delete=models.CASCADE)
     # Enrollment date
     date_enrolled = models.DateField(default=now)
     # Enrollment mode
