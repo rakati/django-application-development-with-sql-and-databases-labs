@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.timezone import now
 
 # User Model
+
+
 class User(models.Model):
     first_name = models.CharField(null=False, max_length=30, default='John')
     last_name = models.CharField(null=False, max_length=30, default='Doe')
@@ -21,9 +23,10 @@ class Instructor(User):
     # Create a toString method for object string representation
     def __str__(self) -> str:
         return "First name: " + self.first_name + ", " + \
-               "Last name: " + self.last_name +  ", " + \
+               "Last name: " + self.last_name + ", " + \
                "Is full time: " + str(self.full_time) + ", " + \
                "Total learners: " + str(self.total_learners)
+
 
 # Learner model
 class Learner(User):
@@ -49,10 +52,28 @@ class Learner(User):
 
     def __str__(self):
         return "First name: " + self.first_name + ", " + \
-               "Last name: " + self.last_name +  ", " + \
+               "Last name: " + self.last_name + ", " + \
                "Occupation: " + self.occupation
 
 # Enrollment model as a lookup table with additional enrollment info
+
+
+# Course model
+class Course(models.Model):
+    name = models.CharField(null=False, max_length=100,
+                            default='online course')
+    description = models.CharField(max_length=500)
+    # Many-To-Many relationship with Instructor
+    instructors = models.ManyToManyField(Instructor)
+    # Many-To-Many relationship with Learner via Enrollment
+    learners = models.ManyToManyField(Learner, through='Enrollment')
+
+    # Create a toString method for object string representation
+    def __str__(self) -> str:
+        return "Name: " + self.name + ", " + \
+            "Description: " + self.description
+
+
 class Enrollment(models.Model):
     AUDIT = 'audit'
     HONOR = 'honor'
@@ -63,26 +84,12 @@ class Enrollment(models.Model):
     # Add learner foreign key
     learner = models.ForeignKey(Learner, on_delete=models.CASCADE)
     # Add course foreign key
-    course = models.ForeignKey(Learner, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     # Enrollment date
     date_enrolled = models.DateField(default=now)
     # Enrollment mode
     mode = models.CharField(max_length=5, choices=COURSE_MODES, default=AUDIT)
 
-
-# Course model
-class Course(models.Model):
-    name = models.CharField(null=False, max_length=100, default='online course')
-    description = models.CharField(max_length=500)
-    # Many-To-Many relationship with Instructor
-    instructors = models.ManyToManyField(Instructor)
-    # Many-To-Many relationship with Learner via Enrollment
-    learner = models.ManyToManyField(Learner, through='Enrollment')
-
-    # Create a toString method for object string representation
-    def __str__(self) -> str:
-        return "Name: " + self.name + ", " + \
-                "Description: " + self.description
 
 # Lesson model
 class Lesson(models.Model):
