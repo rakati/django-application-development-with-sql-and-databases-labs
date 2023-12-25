@@ -6,5 +6,16 @@ from django.urls import reverse
 from django.views import generic
 from django.http import Http404
 
-# Create your views here.
 
+# Create your views here.
+def popular_course_list(request):
+    '''course list view '''
+    context = {}
+    # If the request method is GET
+    if request.method == 'GET':
+        # Using the objects model manage to read all course list
+        # and sort them by total_enrollment descending
+        course_list = Course.objects.order_by('-total_enrollment')[:10]
+        # Append the course list as an entry of context dict
+        context['course_list'] = course_list
+        return render(request, 'onlinecourse/course_list.html', context)
