@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'firstproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'lab1',
+        'USER': 'rakati',
+        'PASSWORD': 'r4015..',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
