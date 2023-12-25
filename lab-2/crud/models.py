@@ -55,8 +55,6 @@ class Learner(User):
                "Last name: " + self.last_name + ", " + \
                "Occupation: " + self.occupation
 
-# Enrollment model as a lookup table with additional enrollment info
-
 
 # Course model
 class Course(models.Model):
@@ -74,6 +72,7 @@ class Course(models.Model):
             "Description: " + self.description
 
 
+# Enrollment model as a lookup table with additional enrollment info
 class Enrollment(models.Model):
     AUDIT = 'audit'
     HONOR = 'honor'
