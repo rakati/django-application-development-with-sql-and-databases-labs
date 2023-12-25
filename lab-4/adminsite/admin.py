@@ -5,10 +5,14 @@ from .models import Course, Instructor, Lesson
 
 
 class CourseAdmin(admin.ModelAdmin):
-    """The class is responsible for customization of field in admin page
-    for the Course model"""
+    """customize fields included in Course admin page"""
     fields = ['pub_date', 'name', 'description']
 
 
+class InstructorAdmin(admin.ModelAdmin):
+    """customize fields included in Instructor admin page"""
+    fields = ['user', 'full_time']
+
+
 admin.site.register(Course, CourseAdmin)
-admin.site.register(Instructor)
+admin.site.register(Instructor, InstructorAdmin)
