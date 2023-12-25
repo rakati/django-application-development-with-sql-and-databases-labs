@@ -1,5 +1,7 @@
 '''First app views'''
 from django.http import HttpResponse
+from datetime import date
+
 
 # Create your views here.
 
@@ -11,4 +13,13 @@ def index(request):
         "This is my first view" \
         "</html>"
     # return the template as content argument in HTTP response
+    return HttpResponse(content=template)
+
+
+def get_date(request):
+    '''Simple page returning current date'''
+    today = date.today()
+    template = "<html>" \
+        f"Today's date is {today}" \
+        "</html>"
     return HttpResponse(content=template)
