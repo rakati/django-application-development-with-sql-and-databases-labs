@@ -69,12 +69,12 @@
       <div class="container">
         <!--Stylize root div with .container class -->
         <h1>Login</h1>
-        <div class="">
+        <div class="form-group">
           <!--Stylize second div with .form-group class -->
           <label for="username"><b>User Name: </b></label>
           <input
             id="username"
-            class=""
+            class="form-control"
             type="text"
             placeholder="Enter User Name: "
             name="username"
@@ -85,7 +85,7 @@
           <input
             id="psw"
             type="password"
-            class=""
+            class="form-control"
             placeholder="Enter Password: "
             name="psw"
             required
@@ -93,12 +93,12 @@
           <!--Stylize input with .form-control class -->
         </div>
         {% if message %}
-        <div class="">
+        <div class="alert alert-warning">
           <!--Stylize the message paragraph with .alert and .alert-warning class -->
           {{ message }}
         </div>
         {% endif %}
-        <button class="" type="submit">Login</button>
+        <button class="btn btn-primary" type="submit">Login</button>
         <!--Stylize button with .btn and .btn-primary class -->
       </div>
     </form>
