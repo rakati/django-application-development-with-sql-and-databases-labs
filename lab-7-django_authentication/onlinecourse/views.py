@@ -9,21 +9,47 @@ from django.views import generic, View
 from collections import defaultdict
 from django.contrib.auth import login, logout, authenticate
 import logging
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+
 # Create authentication related views
+def login_request(request):
+    context = {}
+    # Handles POST request
+    if request.method == "POST":
+        # Get username and password from request.POST dictionary
+        username = request.POST['username']
+        password = request.POST['psw']
+        # Try to check if provide credential can be authenticated
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            # If user is valid, call login method to login current user
+            login(request, user)
+            return redirect('onlinecourse:popular_course_list')
+        else:
+            # If not, return to login page again
+            return render(request, 'onlinecourse/user_login.html', context)
+    else:
+        return render(request, 'onlinecourse/user_login.html', context)
 
 
+def logout_request(request):
+    print(f"Log out the user {request.user.username}")
+    logout(request)
+    return redirect('onlinecourse:popular_course_list')
 
 # Add a class-based course list view
+
+
 class CourseListView(generic.ListView):
     template_name = 'onlinecourse/course_list.html'
     context_object_name = 'course_list'
 
     def get_queryset(self):
-       courses = Course.objects.order_by('-total_enrollment')[:10]
-       return courses
+        courses = Course.objects.order_by('-total_enrollment')[:10]
+        return courses
 
 
 # Add a generic course details view
