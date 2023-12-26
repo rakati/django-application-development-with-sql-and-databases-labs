@@ -8,15 +8,15 @@ from django.http import Http404
 
 
 # Create your class based views here.
-class CourseListView(View):
-    '''class for view list of courses'''
+class CourseListView(generic.ListView):
+    '''class for view list of courses using generic views'''
+    template_name = 'onlinecourse/course_list.html'
+    context_object_name = 'course_list'
 
-    def get(self, request):
-        '''Handles get method for course list view'''
-        context = {}
-        course_list = Course.objects.order_by('-total_enrollment')[:10]
-        context['course_list'] = course_list
-        return render(request, 'onlinecourse/course_list.html', context)
+    # Override get_queryset() to provide list of objects
+    def get_queryset(self):
+        courses = Course.objects.order_by('-total_enrollment')[:10]
+        return courses
 
 
 class EnrollView(View):
@@ -34,17 +34,10 @@ class EnrollView(View):
 
 class CourseDetailsView(View):
     '''class based view for enroll to a course'''
+    model = Course
+    template_name = 'onlinecourse/course_detail.html'
 
-    def get(self, request, *args, **kwargs):
-        context = {}
-        # We get URL parameter pk from keyword argument list as course_id
-        course_id = kwargs.get('pk')
-        try:
-            course = Course.objects.get(pk=course_id)
-            context['course'] = course
-            return render(request, 'onlinecourse/course_detail.html', context)
-        except Course.DoesNotExist:
-            raise Http404("No course matches the given id.")
+
 # Function based views
 
 # Function-based course list view
