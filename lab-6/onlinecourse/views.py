@@ -6,8 +6,17 @@ from django.urls import reverse
 from django.views import generic, View
 from django.http import Http404
 
-# Create your class based views here.
 
+# Create your class based views here.
+class CourseListView(View):
+    '''class for view list of courses'''
+
+    def get(self, request):
+        '''Handles get method for course list view'''
+        context = {}
+        course_list = Course.objects.order_by('-total_enrollment')[:10]
+        context['course_list'] = course_list
+        return render(request, 'onlinecourse/course_list_no_css.html', context)
 
 
 # Function based views
