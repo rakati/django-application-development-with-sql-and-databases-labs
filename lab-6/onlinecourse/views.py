@@ -16,7 +16,20 @@ class CourseListView(View):
         context = {}
         course_list = Course.objects.order_by('-total_enrollment')[:10]
         context['course_list'] = course_list
-        return render(request, 'onlinecourse/course_list_no_css.html', context)
+        return render(request, 'onlinecourse/course_list.html', context)
+
+
+class EnrollView(View):
+    '''class based view for enroll to a course'''
+
+    def post(self, request, *arg, **kwargs):
+        '''Handle post method for enroll to a course form'''
+        course_id = kwargs.get('pk')
+        course = get_object_or_404(Course, pk=course_id)
+        # Increase course enrollments by one
+        course.total_enrollment += 1
+        course.save()
+        return HttpResponseRedirect(reverse(viewname='onlinecourse:course_details', args=(course.id,)))
 
 
 # Function based views
