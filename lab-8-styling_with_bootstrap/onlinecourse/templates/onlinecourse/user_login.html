@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     {% load static %}
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
   </head>
   <body>
     <!-- Add a Navigation bar -->
@@ -62,7 +66,7 @@
     <!-- Stylize Login form -->
     <form action="{% url 'onlinecourse:login' %}" method="post">
       {% csrf_token %}
-      <div class="">
+      <div class="container">
         <!--Stylize root div with .container class -->
         <h1>Login</h1>
         <div class="">
